@@ -9,28 +9,36 @@ function sendMessage() {
 
     const responses = [
         {
-            keywords: ["fail", "failed", "test", "exam"],
-            reply: "It's okay to fail. Try understanding what went wrong, and give yourself another chance. Growth comes from failure."
+            keywords: ["fail", "failed", "exam", "test"],
+            reply: "It's okay to fail sometimes. What matters is that you learn from it and try again. Want to talk about what went wrong?"
         },
         {
-            keywords: ["stress", "stressed", "pressure"],
-            reply: "Take a deep breath. Break your task into small parts, and handle one at a time. You're doing better than you think."
+            keywords: ["sad", "depressed", "upset", "cry"],
+            reply: "I'm here for you. It's okay to feel sad. Do you want to share what’s making you feel this way?"
         },
         {
-            keywords: ["confused", "lost"],
-            reply: "Feeling confused is normal. Try writing down your thoughts or talk to someone who listens well."
+            keywords: ["stress", "stressed", "pressure", "anxiety"],
+            reply: "You're under pressure, and that’s hard. Try to breathe, take one step at a time. I'm here to talk through it."
+        },
+        {
+            keywords: ["confused", "lost", "don't know", "what to do"],
+            reply: "Let’s take a deep breath together. Can you describe what’s confusing you? I’ll try to help break it down."
+        },
+        {
+            keywords: ["advice", "solution", "help me"],
+            reply: "Sure! Tell me what you're facing, and I’ll try to suggest something helpful."
         },
         {
             keywords: ["how are you"],
-            reply: "I'm doing well, thank you. But this is about *you* — how are *you* feeling today?"
+            reply: "I'm doing well, thank you for asking. But I'm more interested in how YOU feel today."
         },
         {
-            keywords: ["sad", "depressed"],
-            reply: "I'm really sorry you're feeling this way. Talk to someone you trust. You're not alone."
+            keywords: ["alone", "lonely"],
+            reply: "You're not alone. I’m here to listen. Want to tell me what’s been going on?"
         },
         {
-            keywords: ["solution", "advice", "what should i do"],
-            reply: "Let’s break your situation down. What exactly are you dealing with right now?"
+            keywords: ["angry", "mad", "frustrated"],
+            reply: "Anger shows you care deeply about something. Want to tell me what’s making you feel this way?"
         }
     ];
 
@@ -44,7 +52,7 @@ function sendMessage() {
     }
 
     if (!found) {
-        addMessage("Zarify", "I'm here to listen. Can you tell me a bit more?");
+        addMessage("Zarify", "I’m here to listen. Tell me more so I can understand better.");
     }
 }
 
