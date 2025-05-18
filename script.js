@@ -1,50 +1,71 @@
-const sendBtn = document.getElementById("send-btn");
-const input = document.getElementById("user-input");
-const chatBox = document.getElementById("chat-box");
-
-sendBtn.addEventListener("click", sendMessage);
-input.addEventListener("keypress", function(e) {
-  if (e.key === "Enter") sendMessage();
-});
-
 function sendMessage() {
-  const userText = input.value.trim();
-  if (!userText) return;
+  const input = document.getElementById('userInput').value.toLowerCase().trim();
+  if (!input) return;
 
-  addMessage("You", userText);
-  input.value = "";
+  addMessage('You: ' + input, 'user');
+  document.getElementById('userInput').value = '';
 
-  const reply = generateReply(userText.toLowerCase());
-  addMessage("Zarify", reply);
-
-  chatBox.scrollTop = chatBox.scrollHeight;
-}
-
-function addMessage(sender, text) {
-  const msgDiv = document.createElement("div");
-  msgDiv.classList.add("message");
-  msgDiv.innerHTML = `<strong>${sender}:</strong> ${text}`;
-  chatBox.appendChild(msgDiv);
-}
-
-function generateReply(text) {
   const responses = [
-    { keywords: ["fail", "failed", "exam"], reply: "Don’t be discouraged! Learn from mistakes and keep trying." },
-    { keywords: ["sad", "depressed", "lonely"], reply: "I’m here to listen. Would you like to talk more about it?" },
-    { keywords: ["stress", "anxiety", "worried"], reply: "Try some breathing exercises. Need tips on managing stress?" },
-    { keywords: ["help", "advice", "solution"], reply: "Tell me what you need help with, and I’ll do my best to assist." },
-    { keywords: ["how are you"], reply: "I’m good! How about you?" },
-    { keywords: ["angry", "mad", "frustrated"], reply: "It’s okay to feel upset sometimes. Want to talk about it?" },
-    { keywords: ["happy", "good", "great"], reply: "Glad you’re feeling good! Keep it up." },
+    {
+      keywords: ['fail', 'failed', 'mistake', 'error', 'lost', 'wrong'],
+      reply: "Everyone makes mistakes. Reflect on what happened, learn from it, and keep pushing forward."
+    },
+    {
+      keywords: ['sad', 'depressed', 'unhappy', 'down', 'bad'],
+      reply: "I'm sorry you're feeling that way. Remember, it's okay to feel down sometimes. Try talking to someone you trust."
+    },
+    {
+      keywords: ['happy', 'good', 'great', 'awesome', 'nice'],
+      reply: "That's wonderful! Keep that positive energy going!"
+    },
+    {
+      keywords: ['stress', 'anxiety', 'nervous', 'worried', 'pressure'],
+      reply: "Take deep breaths and break your problems into small steps. You can handle this one step at a time."
+    },
+    {
+      keywords: ['football', 'game', 'sports'],
+      reply: "Sports teach us great lessons about teamwork and perseverance. Keep practicing and don't give up!"
+    },
+    {
+      keywords: ['study', 'learn', 'bio', 'engineering', 'school', 'college'],
+      reply: "Focus and steady effort are key. Set small goals, and reward yourself when you achieve them."
+    },
+    {
+      keywords: ['love', 'crush', 'relationship', 'heart'],
+      reply: "Matters of the heart can be complex. Be honest and patient with yourself and others."
+    },
+    {
+      keywords: ['help', 'advice', 'solution', 'problem', 'support'],
+      reply: "I'm here to listen. Can you tell me more about what's troubling you?"
+    },
+    {
+      keywords: ['hello', 'hi', 'hey'],
+      reply: "Hello! How are you feeling today?"
+    }
   ];
 
-  for (const r of responses) {
-    if (r.keywords.some(k => text.includes(k))) return r.reply;
+  let matched = false;
+  for (const item of responses) {
+    for (const keyword of item.keywords) {
+      if (input.includes(keyword)) {
+        addMessage('Zarify: ' + item.reply, 'bot');
+        matched = true;
+        break;
+      }
+    }
+    if (matched) break;
   }
 
-  if (text.endsWith("?")) {
-    return "That’s a good question! I’m still learning, but I’ll try to help.";
+  if (!matched) {
+    addMessage('Zarify: Thank you for sharing. Keep expressing yourself!', 'bot');
   }
+}
 
-  return "Thanks for sharing. Keep expressing yourself!";
+function addMessage(text, sender) {
+  const chat = document.getElementById('chat');
+  const message = document.createElement('div');
+  message.className = sender === 'user' ? 'user-message' : 'bot-message';
+  message.textContent = text;
+  chat.appendChild(message);
+  chat.scrollTop = chat.scrollHeight;
 }
