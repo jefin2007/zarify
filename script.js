@@ -1,6 +1,9 @@
+document.getElementById("send-btn").addEventListener("click", sendMessage);
+
 function sendMessage() {
   const inputElement = document.getElementById("user-input");
   const input = inputElement.value.trim();
+
   if (input === "") return;
 
   addMessage("You", input);
