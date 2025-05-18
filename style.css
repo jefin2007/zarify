@@ -1,100 +1,103 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f5f7fa;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
+/* Container for the whole chat */
 .container {
-  width: 100%;
   max-width: 600px;
-  background-color: #ffffff;
+  margin: 30px auto;
+  padding: 20px;
+  background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
   flex-direction: column;
-  height: 600px;
+  height: 80vh;
 }
 
+/* Header */
 header {
-  padding: 20px;
   font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
-  border-bottom: 1px solid #ddd;
+  font-weight: 700;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #ddd;
   text-align: center;
+  color: #333;
 }
 
+/* Chat area */
 .chat-box {
   flex: 1;
-  padding: 20px;
+  padding: 15px;
   overflow-y: auto;
+  background-color: #f7f7f7;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  background-color: #fafafa;
+  margin: 15px 0;
 }
 
+/* User message bubble */
 .user-message {
   align-self: flex-end;
-  background-color: #d0e7ff;
-  color: #004a99;
-  padding: 12px 18px;
-  border-radius: 18px 18px 0 18px;
-  max-width: 75%;
+  background: #007bff;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 20px 20px 0 20px;
+  max-width: 80%;
+  white-space: normal;
   word-wrap: break-word;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  box-shadow: 0 2px 5px rgba(0,123,255,0.3);
 }
 
+/* Bot message bubble */
 .bot-message {
   align-self: flex-start;
-  background-color: #d6ffd6;
-  color: #206620;
-  padding: 12px 18px;
-  border-radius: 18px 18px 18px 0;
-  max-width: 75%;
+  background: #e4e6eb;
+  color: #111;
+  padding: 10px 16px;
+  border-radius: 20px 20px 20px 0;
+  max-width: 80%;
+  white-space: normal;
   word-wrap: break-word;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
+/* Input area container */
 .input-area {
   display: flex;
+  gap: 10px;
   border-top: 1px solid #ddd;
-  padding: 15px 20px;
-  background-color: #fff;
-  border-radius: 0 0 12px 12px;
+  padding-top: 12px;
 }
 
-input[type="text"] {
-  flex: 1;
+/* Text input */
+#user-input {
+  flex-grow: 1;
   padding: 12px 15px;
-  border: 1px solid #ccc;
-  border-radius: 25px;
   font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 25px;
   outline: none;
   transition: border-color 0.3s ease;
 }
 
-input[type="text"]:focus {
+#user-input:focus {
   border-color: #007bff;
 }
 
-button {
-  margin-left: 15px;
-  padding: 12px 20px;
+/* Send button */
+#send-btn {
   background-color: #007bff;
-  border: none;
-  border-radius: 25px;
   color: white;
-  font-size: 1rem;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 25px;
+  font-weight: 600;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-button:hover {
+#send-btn:hover {
   background-color: #0056b3;
 }
