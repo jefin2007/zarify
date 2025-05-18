@@ -21,19 +21,16 @@ function generateResponse(message) {
   const lowerMsg = message.toLowerCase();
   let response = "";
 
-  // Keywords for smarter replies
-  if (lowerMsg.includes("sad") || lowerMsg.includes("depressed") || lowerMsg.includes("fail")) {
-    response = "I'm really sorry you're feeling that way. Want to talk more about it?";
-  } else if (lowerMsg.includes("happy") || lowerMsg.includes("good") || lowerMsg.includes("great")) {
-    response = "That's wonderful! Keep holding onto that feeling.";
-  } else if (lowerMsg.includes("solution") || lowerMsg.includes("fix") || lowerMsg.includes("mistake")) {
-    response = "Try to look at what went wrong, learn one thing from it, and take a small step to improve.";
+  if (lowerMsg.includes("fail") || lowerMsg.includes("sad") || lowerMsg.includes("mistake")) {
+    response = "It's okay to make mistakes. What did you learn from it?";
+  } else if (lowerMsg.includes("solution") || lowerMsg.includes("how")) {
+    response = "Let’s try to break it down. What exactly are you struggling with?";
+  } else if (lowerMsg.includes("happy") || lowerMsg.includes("good")) {
+    response = "That's amazing to hear! Keep it up.";
   } else if (lowerMsg.includes("how are you")) {
-    response = "I'm doing well! I'm here to support you.";
-  } else if (lowerMsg.includes("alone") || lowerMsg.includes("lonely")) {
-    response = "You're not alone. I'm here with you. Want to share more?";
+    response = "I'm just code, but I'm here for you!";
   } else {
-    response = "Thank you for sharing. Keep expressing yourself — I'm here to listen.";
+    response = "Thanks for sharing. Want to tell me more?";
   }
 
   appendMessage("Zarify", response);
