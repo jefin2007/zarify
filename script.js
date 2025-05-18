@@ -1,76 +1,50 @@
-document.getElementById("send-btn").addEventListener("click", sendMessage);
+const sendBtn = document.getElementById("send-btn");
+const input = document.getElementById("user-input");
+const chatBox = document.getElementById("chat-box");
+
+sendBtn.addEventListener("click", sendMessage);
+input.addEventListener("keypress", function(e) {
+  if (e.key === "Enter") sendMessage();
+});
 
 function sendMessage() {
-  const inputElement = document.getElementById("user-input");
-  const input = inputElement.value.trim();
+  const userText = input.value.trim();
+  if (!userText) return;
 
-  if (input === "") return;
+  addMessage("You", userText);
+  input.value = "";
 
-  addMessage("You", input);
-  inputElement.value = "";
+  const reply = generateReply(userText.toLowerCase());
+  addMessage("Zarify", reply);
 
-  const lowerInput = input.toLowerCase();
-
-  const responses = [
-    {
-      keywords: ["fail", "failed", "exam", "test", "score"],
-      reply: "Failing is tough but it’s just a step. Try to find what didn’t work and learn from it. Need tips on studying?"
-    },
-    {
-      keywords: ["sad", "depressed", "unhappy", "cry", "lonely", "alone"],
-      reply: "I’m sorry you’re feeling this way. It’s okay to feel sad sometimes. Talking helps. Want to share what’s on your mind?"
-    },
-    {
-      keywords: ["stress", "anxiety", "worried", "overwhelmed", "nervous"],
-      reply: "Stress can be heavy. Try deep breathing or short breaks. Want me to share some quick relaxation tips?"
-    },
-    {
-      keywords: ["help", "advice", "solution", "guide", "tips"],
-      reply: "Sure! Tell me what you want help with specifically, and I’ll do my best to guide you."
-    },
-    {
-      keywords: ["how are you", "what’s up", "how do you do"],
-      reply: "I’m doing well, thanks! How about you? I’m here to listen."
-    },
-    {
-      keywords: ["angry", "mad", "frustrated", "upset"],
-      reply: "Feeling angry is normal. Try to breathe and maybe talk about what’s bothering you?"
-    },
-    {
-      keywords: ["confused", "lost", "stuck", "uncertain"],
-      reply: "It’s okay to feel lost sometimes. Let’s figure it out step by step. What’s confusing you?"
-    },
-    {
-      keywords: ["happy", "good", "great", "awesome", "fine"],
-      reply: "Glad to hear that! Keep the positive vibes flowing. Anything exciting happening?"
-    }
-  ];
-
-  const isQuestion = input.endsWith("?");
-
-  let matched = false;
-  for (let r of responses) {
-    if (r.keywords.some(k => lowerInput.includes(k))) {
-      addMessage("Zarify", r.reply);
-      matched = true;
-      break;
-    }
-  }
-
-  if (!matched) {
-    if (isQuestion) {
-      addMessage("Zarify", "That’s an interesting question! I’m still learning but I’ll try to help. Could you tell me more?");
-    } else {
-      addMessage("Zarify", "Thanks for sharing. Keep expressing yourself and I’m here to listen!");
-    }
-  }
+  chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-function addMessage(sender, message) {
-  const chatBox = document.getElementById("chat-box");
+function addMessage(sender, text) {
   const msgDiv = document.createElement("div");
-  msgDiv.className = "message";
-  msgDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
+  msgDiv.classList.add("message");
+  msgDiv.innerHTML = `<strong>${sender}:</strong> ${text}`;
   chatBox.appendChild(msgDiv);
-  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function generateReply(text) {
+  const responses = [
+    { keywords: ["fail", "failed", "exam"], reply: "Don’t be discouraged! Learn from mistakes and keep trying." },
+    { keywords: ["sad", "depressed", "lonely"], reply: "I’m here to listen. Would you like to talk more about it?" },
+    { keywords: ["stress", "anxiety", "worried"], reply: "Try some breathing exercises. Need tips on managing stress?" },
+    { keywords: ["help", "advice", "solution"], reply: "Tell me what you need help with, and I’ll do my best to assist." },
+    { keywords: ["how are you"], reply: "I’m good! How about you?" },
+    { keywords: ["angry", "mad", "frustrated"], reply: "It’s okay to feel upset sometimes. Want to talk about it?" },
+    { keywords: ["happy", "good", "great"], reply: "Glad you’re feeling good! Keep it up." },
+  ];
+
+  for (const r of responses) {
+    if (r.keywords.some(k => text.includes(k))) return r.reply;
+  }
+
+  if (text.endsWith("?")) {
+    return "That’s a good question! I’m still learning, but I’ll try to help.";
+  }
+
+  return "Thanks for sharing. Keep expressing yourself!";
 }
