@@ -8,7 +8,6 @@ function sendMessage() {
 
   const lowerInput = input.toLowerCase();
 
-  // More detailed responses with better keyword coverage
   const responses = [
     {
       keywords: ["fail", "failed", "exam", "test", "score"],
@@ -44,10 +43,8 @@ function sendMessage() {
     }
   ];
 
-  // Check for question mark to see if user asks a question
   const isQuestion = input.endsWith("?");
 
-  // Try to find a matching response
   let matched = false;
   for (let r of responses) {
     if (r.keywords.some(k => lowerInput.includes(k))) {
@@ -57,7 +54,6 @@ function sendMessage() {
     }
   }
 
-  // If no keyword matched but input is a question, reply accordingly
   if (!matched) {
     if (isQuestion) {
       addMessage("Zarify", "That’s an interesting question! I’m still learning but I’ll try to help. Could you tell me more?");
