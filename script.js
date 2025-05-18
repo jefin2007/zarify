@@ -1,71 +1,72 @@
 function sendMessage() {
-  const input = document.getElementById('userInput').value.toLowerCase().trim();
+  const input = document.getElementById("userInput").value.toLowerCase().trim();
+  const chatBox = document.getElementById("chatBox");
+
   if (!input) return;
 
-  addMessage('You: ' + input, 'user');
-  document.getElementById('userInput').value = '';
+  addMessage("You: " + input, "user");
 
+  let response = getResponse(input);
+
+  addMessage("Zarify: " + response, "bot");
+
+  document.getElementById("userInput").value = "";
+}
+
+function addMessage(message, sender) {
+  const chatBox = document.getElementById("chatBox");
+  const messageElem = document.createElement("div");
+  messageElem.className = sender === "user" ? "userMessage" : "botMessage";
+  messageElem.textContent = message;
+  chatBox.appendChild(messageElem);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function getResponse(input) {
+  // Keywords and responses with simple solutions
   const responses = [
     {
-      keywords: ['fail', 'failed', 'mistake', 'error', 'lost', 'wrong'],
-      reply: "Everyone makes mistakes. Reflect on what happened, learn from it, and keep pushing forward."
+      keywords: ["how are you", "how r u", "how you", "how's it going"],
+      reply: "I'm doing great, thanks for asking! How can I help you today?"
     },
     {
-      keywords: ['sad', 'depressed', 'unhappy', 'down', 'bad'],
-      reply: "I'm sorry you're feeling that way. Remember, it's okay to feel down sometimes. Try talking to someone you trust."
+      keywords: ["sad", "depressed", "unhappy", "down", "feeling bad"],
+      reply: "I'm sorry to hear that. Remember, it's okay to feel this way. Would you like some tips on how to feel better?"
     },
     {
-      keywords: ['happy', 'good', 'great', 'awesome', 'nice'],
-      reply: "That's wonderful! Keep that positive energy going!"
+      keywords: ["failed", "fail", "failure", "bad result"],
+      reply: "Failure is just a step towards success. Try to analyze what went wrong and keep practicing. Need some advice on improving?"
     },
     {
-      keywords: ['stress', 'anxiety', 'nervous', 'worried', 'pressure'],
-      reply: "Take deep breaths and break your problems into small steps. You can handle this one step at a time."
+      keywords: ["advice", "help", "tips", "solution", "how to"],
+      reply: "Sure! Can you tell me more about what you need advice on?"
     },
     {
-      keywords: ['football', 'game', 'sports'],
-      reply: "Sports teach us great lessons about teamwork and perseverance. Keep practicing and don't give up!"
+      keywords: ["football test", "sports", "game", "match"],
+      reply: "Sports are all about practice and persistence. Keep training and stay positive! Want some specific tips?"
     },
     {
-      keywords: ['study', 'learn', 'bio', 'engineering', 'school', 'college'],
-      reply: "Focus and steady effort are key. Set small goals, and reward yourself when you achieve them."
+      keywords: ["stress", "anxiety", "worried", "nervous"],
+      reply: "Try deep breathing exercises or a short walk to calm your mind. Want me to share more stress relief tips?"
     },
     {
-      keywords: ['love', 'crush', 'relationship', 'heart'],
-      reply: "Matters of the heart can be complex. Be honest and patient with yourself and others."
+      keywords: ["thank you", "thanks", "thx", "appreciate"],
+      reply: "You're welcome! I'm always here to listen."
     },
     {
-      keywords: ['help', 'advice', 'solution', 'problem', 'support'],
-      reply: "I'm here to listen. Can you tell me more about what's troubling you?"
-    },
-    {
-      keywords: ['hello', 'hi', 'hey'],
-      reply: "Hello! How are you feeling today?"
+      keywords: ["hello", "hi", "hey", "good morning", "good evening"],
+      reply: "Hello! How can I support you today?"
     }
   ];
 
-  let matched = false;
   for (const item of responses) {
     for (const keyword of item.keywords) {
       if (input.includes(keyword)) {
-        addMessage('Zarify: ' + item.reply, 'bot');
-        matched = true;
-        break;
+        return item.reply;
       }
     }
-    if (matched) break;
   }
 
-  if (!matched) {
-    addMessage('Zarify: Thank you for sharing. Keep expressing yourself!', 'bot');
-  }
-}
-
-function addMessage(text, sender) {
-  const chat = document.getElementById('chat');
-  const message = document.createElement('div');
-  message.className = sender === 'user' ? 'user-message' : 'bot-message';
-  message.textContent = text;
-  chat.appendChild(message);
-  chat.scrollTop = chat.scrollHeight;
+  // Default fallback
+  return "Thank you for sharing. Keep expressing yourself!";
 }
