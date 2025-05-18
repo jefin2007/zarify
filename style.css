@@ -1,103 +1,36 @@
-/* Container for the whole chat */
-.container {
-  max-width: 600px;
-  margin: 30px auto;
-  padding: 20px;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  display: flex;
-  flex-direction: column;
-  height: 80vh;
+.chat-container {
+  width: 400px;
+  max-width: 90vw;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
 }
 
-/* Header */
-header {
-  font-size: 1.5rem;
-  font-weight: 700;
-  padding-bottom: 15px;
-  border-bottom: 2px solid #ddd;
-  text-align: center;
-  color: #333;
+.message {
+  padding: 10px 15px;
+  margin: 8px 0;
+  border-radius: 15px;
+  max-width: 80%;
+  white-space: normal;      /* allows normal wrapping */
+  word-wrap: break-word;    /* breaks long words properly */
+  line-height: 1.4;
+  font-size: 16px;
 }
 
-/* Chat area */
-.chat-box {
-  flex: 1;
-  padding: 15px;
-  overflow-y: auto;
-  background-color: #f7f7f7;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin: 15px 0;
-}
-
-/* User message bubble */
 .user-message {
+  background-color: #4a90e2;
+  color: white;
   align-self: flex-end;
-  background: #007bff;
-  color: white;
-  padding: 10px 16px;
-  border-radius: 20px 20px 0 20px;
-  max-width: 80%;
-  white-space: normal;
-  word-wrap: break-word;
-  font-size: 1rem;
-  box-shadow: 0 2px 5px rgba(0,123,255,0.3);
+  text-align: right;
 }
 
-/* Bot message bubble */
 .bot-message {
+  background-color: #e5e5ea;
+  color: #000;
   align-self: flex-start;
-  background: #e4e6eb;
-  color: #111;
-  padding: 10px 16px;
-  border-radius: 20px 20px 20px 0;
-  max-width: 80%;
-  white-space: normal;
-  word-wrap: break-word;
-  font-size: 1rem;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  text-align: left;
 }
 
-/* Input area container */
-.input-area {
+.messages {
   display: flex;
-  gap: 10px;
-  border-top: 1px solid #ddd;
-  padding-top: 12px;
-}
-
-/* Text input */
-#user-input {
-  flex-grow: 1;
-  padding: 12px 15px;
-  font-size: 1rem;
-  border: 1.5px solid #ccc;
-  border-radius: 25px;
-  outline: none;
-  transition: border-color 0.3s ease;
-}
-
-#user-input:focus {
-  border-color: #007bff;
-}
-
-/* Send button */
-#send-btn {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 25px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-#send-btn:hover {
-  background-color: #0056b3;
+  flex-direction: column;
 }
