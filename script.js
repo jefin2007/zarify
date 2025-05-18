@@ -9,45 +9,41 @@ function sendMessage() {
 
     const responses = [
         {
-            keywords: ["sad", "upset", "depressed", "low", "unhappy", "down"],
-            reply: "It's okay to feel sad sometimes. You're not alone, and I'm here for you."
+            keywords: ["failed", "fail", "exam", "test", "football"],
+            reply: "Failing is just one step in the journey. Try to review what went wrong, make a new plan, and give it another go. You’ve got this!"
         },
         {
-            keywords: ["happy", "good", "excited", "joyful"],
-            reply: "That's wonderful to hear! Keep spreading your happiness!"
+            keywords: ["stress", "stressed", "pressure", "overwhelmed"],
+            reply: "Take a 5-minute break, breathe deeply, and write down what’s overwhelming you. One small step at a time makes things easier."
         },
         {
-            keywords: ["fail", "failure", "useless", "rejected", "didn't", "not pass", "test", "exam", "football"],
-            reply: "It's okay to fail sometimes — it's part of learning and growing. You're still valuable and capable!"
+            keywords: ["confused", "don't know", "lost", "what to do"],
+            reply: "It’s okay to be confused. Try listing your thoughts in a notebook — it can help you see things more clearly."
         },
         {
-            keywords: ["anxious", "anxiety", "stress", "worried", "overwhelmed"],
-            reply: "Take a deep breath. You're doing your best, and that's more than enough. One step at a time."
-        },
-        {
-            keywords: ["cry", "tears", "broke down", "emotional"],
-            reply: "Crying shows you're strong enough to feel. It's perfectly human. I'm here with you."
-        },
-        {
-            keywords: ["angry", "mad", "furious", "frustrated"],
-            reply: "It's okay to feel anger. Try to breathe and let it out slowly. You matter."
-        },
-        {
-            keywords: ["alone", "lonely", "nobody", "isolated"],
-            reply: "You are not alone, even if it feels that way. I'm here, and so are others who care."
-        },
-        {
-            keywords: ["love", "heart", "crush", "relationship"],
-            reply: "Love can be beautiful and painful. Be kind to yourself — you deserve respect and care."
+            keywords: ["sad", "depressed", "lonely", "alone"],
+            reply: "You’re not alone, and your feelings matter. Talk to someone you trust, or try writing a journal — even small steps can lift your mood."
         },
         {
             keywords: ["how are you", "how r u", "how do you feel"],
-            reply: "I'm here and always ready to listen. How are *you* feeling today?"
+            reply: "I'm always here for you. But more importantly — how are *you* feeling?"
         },
         {
-            keywords: ["thanks", "thank you", "grateful"],
-            reply: "You're welcome. I'm always here if you need someone to talk to."
+            keywords: ["love", "crush", "heartbreak", "relationship"],
+            reply: "Love can hurt sometimes. Focus on loving yourself first — your worth doesn’t depend on others."
         },
+        {
+            keywords: ["thank you", "thanks", "grateful"],
+            reply: "You’re always welcome. I’m here anytime you need to talk."
+        },
+        {
+            keywords: ["solution", "what should i do", "give me advice", "help me"],
+            reply: "Sure — can you tell me a bit more about what you're facing? I'll do my best to help."
+        },
+        {
+            keywords: ["angry", "mad", "irritated"],
+            reply: "Anger is a natural emotion. Try to take a break, drink some water, or listen to calming music — it can help you cool down."
+        }
     ];
 
     let matched = false;
@@ -63,7 +59,7 @@ function sendMessage() {
     }
 
     if (!matched) {
-        addMessage("Zarify", "I'm here for you. Feel free to tell me more whenever you're ready.");
+        addMessage("Zarify", "Tell me more — I'm listening and ready to help however I can.");
     }
 }
 
