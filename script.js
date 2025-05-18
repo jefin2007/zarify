@@ -1,23 +1,14 @@
-function sendMessage() {
-  const input = document.getElementById("user-input");
+// Function to add messages to chat window
+function addMessageToChat(sender, message) {
   const chatBox = document.getElementById("chat-box");
-
-  if (input.value.trim() === "") return;
-
-  const userMessage = document.createElement("div");
-  userMessage.className = "user-message";
-  userMessage.innerText = input.value;
-  chatBox.appendChild(userMessage);
-
-  const reply = document.createElement("div");
-  reply.className = "bot-message";
-  reply.innerText = getBotReply(input.value);
-  chatBox.appendChild(reply);
-
-  input.value = "";
-  chatBox.scrollTop = chatBox.scrollHeight;
+  const messageElement = document.createElement("div");
+  messageElement.className = sender === "You" ? "user-message" : "bot-message";
+  messageElement.textContent = `${sender}: ${message}`;
+  chatBox.appendChild(messageElement);
+  chatBox.scrollTop = chatBox.scrollHeight; // Auto scroll to latest
 }
 
+// Function to get varied bot replies based on user message
 function getBotReply(message) {
   message = message.toLowerCase();
 
@@ -60,13 +51,25 @@ function getBotReply(message) {
   }
 }
 
-  if (message.includes("sad") || message.includes("bad")) {
-    return "I'm here for you. Want to talk more about it?";
-  } else if (message.includes("happy") || message.includes("good")) {
-    return "That’s awesome! Keep smiling!";
-  } else if (message.includes("alone")) {
-    return "You’re not alone. I'm with you.";
-  } else {
-    return "Thank you for sharing. Keep expressing yourself.";
-  }
+// Function to send user message and get bot reply
+function sendMessage() {
+  const input = document.getElementById("user-input");
+  const message = input.value.trim();
+  if (message === "") return; // don't send empty messages
+
+  addMessageToChat("You", message);
+  input.value = "";
+
+  // Simulate bot reply delay
+  setTimeout(() => {
+    const reply = getBotReply(message);
+    addMessageToChat("Bot", reply);
+  }, 500);
 }
+
+// Optional: Enable sending message by pressing Enter key
+document.getElementById("user-input").addEventListener("keydown", function(e) {
+  if (e.key === "Enter") {
+    sendMessage();
+  }
+});
