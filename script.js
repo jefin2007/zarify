@@ -1,66 +1,42 @@
 function sendMessage() {
-    const input = document.getElementById("user-input").value.trim();
-    if (input === "") return;
+  const inputElement = document.getElementById("user-input");
+  const input = inputElement.value.trim();
+  if (input === "") return;
 
-    addMessage("You", input);
-    document.getElementById("user-input").value = "";
+  addMessage("You", input);
+  inputElement.value = "";
 
-    const lowerInput = input.toLowerCase();
+  const lowerInput = input.toLowerCase();
 
-    const responses = [
-        {
-            keywords: ["fail", "failed", "exam", "test"],
-            reply: "It's okay to fail sometimes. What matters is that you learn from it and try again. Want to talk about what went wrong?"
-        },
-        {
-            keywords: ["sad", "depressed", "upset", "cry"],
-            reply: "I'm here for you. It's okay to feel sad. Do you want to share what’s making you feel this way?"
-        },
-        {
-            keywords: ["stress", "stressed", "pressure", "anxiety"],
-            reply: "You're under pressure, and that’s hard. Try to breathe, take one step at a time. I'm here to talk through it."
-        },
-        {
-            keywords: ["confused", "lost", "don't know", "what to do"],
-            reply: "Let’s take a deep breath together. Can you describe what’s confusing you? I’ll try to help break it down."
-        },
-        {
-            keywords: ["advice", "solution", "help me"],
-            reply: "Sure! Tell me what you're facing, and I’ll try to suggest something helpful."
-        },
-        {
-            keywords: ["how are you"],
-            reply: "I'm doing well, thank you for asking. But I'm more interested in how YOU feel today."
-        },
-        {
-            keywords: ["alone", "lonely"],
-            reply: "You're not alone. I’m here to listen. Want to tell me what’s been going on?"
-        },
-        {
-            keywords: ["angry", "mad", "frustrated"],
-            reply: "Anger shows you care deeply about something. Want to tell me what’s making you feel this way?"
-        }
-    ];
-
-    let found = false;
-    for (let r of responses) {
-        if (r.keywords.some(k => lowerInput.includes(k))) {
-            addMessage("Zarify", r.reply);
-            found = true;
-            break;
-        }
-    }
-
-    if (!found) {
-        addMessage("Zarify", "I’m here to listen. Tell me more so I can understand better.");
-    }
-}
-
-function addMessage(sender, message) {
-    const chatBox = document.getElementById("chat-box");
-    const msgDiv = document.createElement("div");
-    msgDiv.classList.add("message");
-    msgDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
-    chatBox.appendChild(msgDiv);
-    chatBox.scrollTop = chatBox.scrollHeight;
-}
+  const responses = [
+    {
+      keywords: ["fail", "failed", "exam", "test"],
+      reply: "It's okay to fail. Every mistake is a step toward learning. What do you think went wrong?"
+    },
+    {
+      keywords: ["sad", "depressed", "cry", "tears"],
+      reply: "I'm really sorry you're feeling this way. Do you want to talk more about it?"
+    },
+    {
+      keywords: ["stress", "anxiety", "overwhelmed"],
+      reply: "You’re under a lot of pressure. It's okay to slow down. Want to walk through it together?"
+    },
+    {
+      keywords: ["help", "advice", "solution"],
+      reply: "I'm here to help. Can you tell me a bit more so I can give better advice?"
+    },
+    {
+      keywords: ["how are you"],
+      reply: "I'm doing well, thanks! I'm more interested in how YOU are."
+    },
+    {
+      keywords: ["alone", "lonely"],
+      reply: "I hear you. Feeling alone is hard. Want to share more about what you're going through?"
+    },
+    {
+      keywords: ["angry", "mad", "furious"],
+      reply: "Anger is valid. Let it out. I'm here to listen without judgment."
+    },
+    {
+      keywords: ["confused", "lost", "stuck"],
+      reply: "Let’s try to
