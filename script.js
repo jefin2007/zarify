@@ -1,48 +1,77 @@
 function sendMessage() {
-  const input = document.getElementById("user-input");
-  const message = input.value.trim();
-  if (message === "") return;
+    const input = document.getElementById("user-input").value.trim();
+    if (input === "") return;
 
-  addMessage("You", message);
-  input.value = "";
+    addMessage("You", input);
+    document.getElementById("user-input").value = "";
 
-  setTimeout(() => {
-    const botReply = getBotReply(message);
-    addMessage("Zarify", botReply);
-  }, 500);
-}
+    const lowerInput = input.toLowerCase();
 
-function addMessage(sender, text) {
-  const chat = document.getElementById("chat");
-  const messageElement = document.createElement("div");
-  messageElement.className = "message";
-  messageElement.innerHTML = `<strong>${sender}:</strong> ${text}`;
-  chat.appendChild(messageElement);
-  chat.scrollTop = chat.scrollHeight;
-}
+    const responses = [
+        {
+            keywords: ["sad", "upset", "depressed", "low", "unhappy", "down"],
+            reply: "It's okay to feel sad sometimes. You're not alone, and I'm here for you."
+        },
+        {
+            keywords: ["happy", "good", "excited", "joyful"],
+            reply: "That's wonderful to hear! Keep spreading your happiness!"
+        },
+        {
+            keywords: ["fail", "failure", "useless", "rejected", "didn't", "not pass", "test", "exam", "football"],
+            reply: "It's okay to fail sometimes — it's part of learning and growing. You're still valuable and capable!"
+        },
+        {
+            keywords: ["anxious", "anxiety", "stress", "worried", "overwhelmed"],
+            reply: "Take a deep breath. You're doing your best, and that's more than enough. One step at a time."
+        },
+        {
+            keywords: ["cry", "tears", "broke down", "emotional"],
+            reply: "Crying shows you're strong enough to feel. It's perfectly human. I'm here with you."
+        },
+        {
+            keywords: ["angry", "mad", "furious", "frustrated"],
+            reply: "It's okay to feel anger. Try to breathe and let it out slowly. You matter."
+        },
+        {
+            keywords: ["alone", "lonely", "nobody", "isolated"],
+            reply: "You are not alone, even if it feels that way. I'm here, and so are others who care."
+        },
+        {
+            keywords: ["love", "heart", "crush", "relationship"],
+            reply: "Love can be beautiful and painful. Be kind to yourself — you deserve respect and care."
+        },
+        {
+            keywords: ["how are you", "how r u", "how do you feel"],
+            reply: "I'm here and always ready to listen. How are *you* feeling today?"
+        },
+        {
+            keywords: ["thanks", "thank you", "grateful"],
+            reply: "You're welcome. I'm always here if you need someone to talk to."
+        },
+    ];
 
-function getBotReply(message) {
-  const msg = message.toLowerCase();
-
-  const responses = [
-    { keywords: ["how are you", "how r u"], reply: "I'm doing great! How about you?" },
-    { keywords: ["hello", "hi", "hey"], reply: "Hey there! How can I help you today?" },
-    { keywords: ["sad", "depressed", "bad"], reply: "I'm here for you. Want to talk more about it?" },
-    { keywords: ["happy", "joy", "excited"], reply: "That's amazing! Keep that energy alive!" },
-    { keywords: ["alone", "lonely"], reply: "You're not alone. I'm with you." },
-    { keywords: ["love"], reply: "Love is powerful. Want to talk about it?" },
-    { keywords: ["angry", "mad", "furious"], reply: "It’s okay to feel that way. Want to vent a bit?" },
-    { keywords: ["life", "meaning", "purpose"], reply: "Life is a journey. What part are you exploring today?" },
-    { keywords: ["fail", "failure", "useless"], reply: "You're not a failure. Every step matters." },
-    { keywords: ["thank", "thanks"], reply: "You're welcome. Always here for you." },
-    { keywords: ["bye", "goodbye"], reply: "Take care. Come back anytime." }
-  ];
-
-  for (const item of responses) {
-    if (item.keywords.some(kw => msg.includes(kw))) {
-      return item.reply;
+    let matched = false;
+    for (let item of responses) {
+        for (let keyword of item.keywords) {
+            if (lowerInput.includes(keyword)) {
+                addMessage("Zarify", item.reply);
+                matched = true;
+                break;
+            }
+        }
+        if (matched) break;
     }
-  }
 
-  return "I may not understand everything, but I'm always here to listen.";
+    if (!matched) {
+        addMessage("Zarify", "I'm here for you. Feel free to tell me more whenever you're ready.");
+    }
+}
+
+function addMessage(sender, message) {
+    const chatBox = document.getElementById("chat-box");
+    const messageDiv = document.createElement("div");
+    messageDiv.classList.add("message");
+    messageDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
+    chatBox.appendChild(messageDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
 }
