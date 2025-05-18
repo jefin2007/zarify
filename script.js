@@ -1,72 +1,68 @@
 function sendMessage() {
-  const input = document.getElementById("userInput").value.toLowerCase().trim();
-  const chatBox = document.getElementById("chatBox");
+  const input = document.getElementById("user-input");
+  const message = input.value.trim();
+  if (message === "") return;
 
-  if (!input) return;
+  addMessage("You", message);
+  input.value = "";
 
-  addMessage("You: " + input, "user");
-
-  let response = getResponse(input);
-
-  addMessage("Zarify: " + response, "bot");
-
-  document.getElementById("userInput").value = "";
+  const reply = getBotReply(message.toLowerCase());
+  setTimeout(() => {
+    addMessage("Zarify", reply);
+  }, 600);
 }
 
-function addMessage(message, sender) {
-  const chatBox = document.getElementById("chatBox");
-  const messageElem = document.createElement("div");
-  messageElem.className = sender === "user" ? "userMessage" : "botMessage";
-  messageElem.textContent = message;
-  chatBox.appendChild(messageElem);
-  chatBox.scrollTop = chatBox.scrollHeight;
+function addMessage(sender, text) {
+  const chat = document.getElementById("chat");
+  const messageDiv = document.createElement("div");
+  messageDiv.className = sender === "You" ? "user-message" : "bot-message";
+  messageDiv.innerText = `${sender}: ${text}`;
+  chat.appendChild(messageDiv);
+  chat.scrollTop = chat.scrollHeight;
 }
 
-function getResponse(input) {
-  // Keywords and responses with simple solutions
+function getBotReply(message) {
+  // Keyword-based responses
   const responses = [
     {
-      keywords: ["how are you", "how r u", "how you", "how's it going"],
-      reply: "I'm doing great, thanks for asking! How can I help you today?"
+      keywords: ["sad", "depressed", "upset", "down"],
+      reply: "I'm really sorry you're feeling this way. You're not alone. Do you want to talk about it?"
     },
     {
-      keywords: ["sad", "depressed", "unhappy", "down", "feeling bad"],
-      reply: "I'm sorry to hear that. Remember, it's okay to feel this way. Would you like some tips on how to feel better?"
+      keywords: ["happy", "good", "great", "awesome"],
+      reply: "That's amazing! I'm glad you're feeling good. Keep spreading those good vibes!"
     },
     {
-      keywords: ["failed", "fail", "failure", "bad result"],
-      reply: "Failure is just a step towards success. Try to analyze what went wrong and keep practicing. Need some advice on improving?"
+      keywords: ["football", "lost", "fail", "exam", "test"],
+      reply: "It's okay to fail. Every mistake is a lesson. What did you learn from it?"
     },
     {
-      keywords: ["advice", "help", "tips", "solution", "how to"],
-      reply: "Sure! Can you tell me more about what you need advice on?"
+      keywords: ["solution", "what should I do", "how", "fix", "help me"],
+      reply: "Try breaking the problem into smaller parts. What exactly are you struggling with?"
     },
     {
-      keywords: ["football test", "sports", "game", "match"],
-      reply: "Sports are all about practice and persistence. Keep training and stay positive! Want some specific tips?"
+      keywords: ["angry", "frustrated", "annoyed"],
+      reply: "Take a deep breath. It's okay to feel that way. Do you want to share what happened?"
     },
     {
-      keywords: ["stress", "anxiety", "worried", "nervous"],
-      reply: "Try deep breathing exercises or a short walk to calm your mind. Want me to share more stress relief tips?"
+      keywords: ["love", "heartbreak", "crush", "miss"],
+      reply: "Matters of the heart are tough. I'm here for you—want to talk about it?"
     },
     {
-      keywords: ["thank you", "thanks", "thx", "appreciate"],
-      reply: "You're welcome! I'm always here to listen."
+      keywords: ["alone", "lonely", "nobody", "ignored"],
+      reply: "You're not alone. I’m here to listen. What’s making you feel this way?"
     },
-    {
-      keywords: ["hello", "hi", "hey", "good morning", "good evening"],
-      reply: "Hello! How can I support you today?"
-    }
   ];
 
+  // Match message to keywords
   for (const item of responses) {
     for (const keyword of item.keywords) {
-      if (input.includes(keyword)) {
+      if (message.includes(keyword)) {
         return item.reply;
       }
     }
   }
 
-  // Default fallback
-  return "Thank you for sharing. Keep expressing yourself!";
+  // Default reply
+  return "Thank you for sharing. Keep expressing yourself. I'm here to listen.";
 }
