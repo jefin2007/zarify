@@ -1,37 +1,38 @@
 function sendMessage() {
   const input = document.getElementById("user-input");
   const message = input.value.trim();
-  if (message === "") return;
+  if (!message) return;
 
-  appendMessage("You", message);
+  const chatBox = document.getElementById("chat-box");
+
+  const userDiv = document.createElement("div");
+  userDiv.className = "user-message";
+  userDiv.innerText = message;
+  chatBox.appendChild(userDiv);
+
+  const botDiv = document.createElement("div");
+  botDiv.className = "bot-message";
+  botDiv.innerText = getBotResponse(message);
+  chatBox.appendChild(botDiv);
+
   input.value = "";
-  generateResponse(message);
+  chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-function appendMessage(sender, message) {
-  const chat = document.getElementById("chat");
-  const messageElement = document.createElement("div");
-  messageElement.classList.add("message");
-  messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
-  chat.appendChild(messageElement);
-  chat.scrollTop = chat.scrollHeight;
-}
+function getBotResponse(msg) {
+  const message = msg.toLowerCase();
 
-function generateResponse(message) {
-  const lowerMsg = message.toLowerCase();
-  let response = "";
-
-  if (lowerMsg.includes("fail") || lowerMsg.includes("sad") || lowerMsg.includes("mistake")) {
-    response = "It's okay to make mistakes. What did you learn from it?";
-  } else if (lowerMsg.includes("solution") || lowerMsg.includes("how")) {
-    response = "Let’s try to break it down. What exactly are you struggling with?";
-  } else if (lowerMsg.includes("happy") || lowerMsg.includes("good")) {
-    response = "That's amazing to hear! Keep it up.";
-  } else if (lowerMsg.includes("how are you")) {
-    response = "I'm just code, but I'm here for you!";
-  } else {
-    response = "Thanks for sharing. Want to tell me more?";
+  if (message.includes("fail") || message.includes("mistake") || message.includes("sad")) {
+    return "It’s okay to fail. Every mistake is a step toward learning. Want to talk more?";
   }
 
-  appendMessage("Zarify", response);
+  if (message.includes("solution") || message.includes("what should i do")) {
+    return "Let’s think it through. What happened exactly? We can figure this out.";
+  }
+
+  if (message.includes("how are you")) {
+    return "I’m here for you. How are *you* feeling today?";
+  }
+
+  return "Thank you for sharing. Keep expressing yourself.";
 }
