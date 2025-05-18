@@ -3,66 +3,38 @@ function sendMessage() {
   const message = input.value.trim();
   if (message === "") return;
 
-  addMessage("You", message);
+  appendMessage("You", message);
   input.value = "";
-
-  const reply = getBotReply(message.toLowerCase());
-  setTimeout(() => {
-    addMessage("Zarify", reply);
-  }, 600);
+  generateResponse(message);
 }
 
-function addMessage(sender, text) {
+function appendMessage(sender, message) {
   const chat = document.getElementById("chat");
-  const messageDiv = document.createElement("div");
-  messageDiv.className = sender === "You" ? "user-message" : "bot-message";
-  messageDiv.innerText = `${sender}: ${text}`;
-  chat.appendChild(messageDiv);
+  const messageElement = document.createElement("div");
+  messageElement.classList.add("message");
+  messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
+  chat.appendChild(messageElement);
   chat.scrollTop = chat.scrollHeight;
 }
 
-function getBotReply(message) {
-  // Keyword-based responses
-  const responses = [
-    {
-      keywords: ["sad", "depressed", "upset", "down"],
-      reply: "I'm really sorry you're feeling this way. You're not alone. Do you want to talk about it?"
-    },
-    {
-      keywords: ["happy", "good", "great", "awesome"],
-      reply: "That's amazing! I'm glad you're feeling good. Keep spreading those good vibes!"
-    },
-    {
-      keywords: ["football", "lost", "fail", "exam", "test"],
-      reply: "It's okay to fail. Every mistake is a lesson. What did you learn from it?"
-    },
-    {
-      keywords: ["solution", "what should I do", "how", "fix", "help me"],
-      reply: "Try breaking the problem into smaller parts. What exactly are you struggling with?"
-    },
-    {
-      keywords: ["angry", "frustrated", "annoyed"],
-      reply: "Take a deep breath. It's okay to feel that way. Do you want to share what happened?"
-    },
-    {
-      keywords: ["love", "heartbreak", "crush", "miss"],
-      reply: "Matters of the heart are tough. I'm here for you—want to talk about it?"
-    },
-    {
-      keywords: ["alone", "lonely", "nobody", "ignored"],
-      reply: "You're not alone. I’m here to listen. What’s making you feel this way?"
-    },
-  ];
+function generateResponse(message) {
+  const lowerMsg = message.toLowerCase();
+  let response = "";
 
-  // Match message to keywords
-  for (const item of responses) {
-    for (const keyword of item.keywords) {
-      if (message.includes(keyword)) {
-        return item.reply;
-      }
-    }
+  // Keywords for smarter replies
+  if (lowerMsg.includes("sad") || lowerMsg.includes("depressed") || lowerMsg.includes("fail")) {
+    response = "I'm really sorry you're feeling that way. Want to talk more about it?";
+  } else if (lowerMsg.includes("happy") || lowerMsg.includes("good") || lowerMsg.includes("great")) {
+    response = "That's wonderful! Keep holding onto that feeling.";
+  } else if (lowerMsg.includes("solution") || lowerMsg.includes("fix") || lowerMsg.includes("mistake")) {
+    response = "Try to look at what went wrong, learn one thing from it, and take a small step to improve.";
+  } else if (lowerMsg.includes("how are you")) {
+    response = "I'm doing well! I'm here to support you.";
+  } else if (lowerMsg.includes("alone") || lowerMsg.includes("lonely")) {
+    response = "You're not alone. I'm here with you. Want to share more?";
+  } else {
+    response = "Thank you for sharing. Keep expressing yourself — I'm here to listen.";
   }
 
-  // Default reply
-  return "Thank you for sharing. Keep expressing yourself. I'm here to listen.";
+  appendMessage("Zarify", response);
 }
